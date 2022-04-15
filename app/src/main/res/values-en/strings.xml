@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">nativeAndroidApplicationAdvance</string>
+    <string name="titleApp">Cinema films</string>
+    <string name="introduction">Welcome to our App</string>
+    <string name="AddText">Add new film seen</string>
+    <string name="ShowText">See the films you\'ve seen</string>
+    <string name="ShowDetailsFilms">To see more information from any of the list of films, press on the title of the film.</string>
+</resources>

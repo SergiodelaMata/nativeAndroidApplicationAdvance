@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">nativeAndroidApplicationAdvance</string>
+    <string name="titleApp">Film di cinema</string>
+    <string name="introduction">Benvenuti nella nostra App</string>
+    <string name="AddText">Aggiungi un nuovo film visto</string>
+    <string name="ShowText">Vedere i film che hai visto</string>
+    <string name="ShowDetailsFilms">Per vedere più informazioni da qualsiasi elenco di film, premi sul titolo del film.</string>
+</resources>
