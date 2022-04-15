@@ -6,4 +6,18 @@
     <string name="AddText">Aggiungi un nuovo film visto</string>
     <string name="ShowText">Vedere i film che hai visto</string>
     <string name="ShowDetailsFilms">Per vedere più informazioni da qualsiasi elenco di film, premi sul titolo del film.</string>
+    <string name="Poster">Immagine del poster</string>
+    <string name="TitleFilm">Titolo del film</string>
+    <string name="YearFilm">Anno di produzione</string>
+    <string name="DurationFilm">Durata</string>
+    <string name="GenresFilm">Generi</string>
+    <string name="MainActorFilm">Attore principale</string>
+    <string name="OtherActorsFilm">Altri attori</string>
+    <string name="DirectorFilm">Direttore</string>
+    <string name="countryMadeFilm">Paese d\'origine</string>
+    <string name="originalLanguageFilm">Lingua originale</string>
+    <string name="languageSeenFilm">Lingua in cui è stato visto</string>
+    <string name="citySeenFilm">Città in cui è stato visto</string>
+    <string name="countrySeenFilm">Paese in cui è stato visto</string>
+    <string name="dateSeenFilm">Data in cui è stato visto</string>
 </resources>

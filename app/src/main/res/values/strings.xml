@@ -5,4 +5,18 @@
     <string name="AddText">Add new film seen</string>
     <string name="ShowText">See the films you\'ve seen</string>
     <string name="ShowDetailsFilms">To see more information from any of the list of films, press on the title of the film.</string>
+    <string name="Poster">Poster Image</string>
+    <string name="TitleFilm">Title film</string>
+    <string name="YearFilm">Year production</string>
+    <string name="DurationFilm">Duration</string>
+    <string name="GenresFilm">Genres</string>
+    <string name="MainActorFilm">Main actor</string>
+    <string name="OtherActorsFilm">Other actors</string>
+    <string name="DirectorFilm">Director</string>
+    <string name="countryMadeFilm">Original country</string>
+    <string name="originalLanguageFilm">Original language</string>
+    <string name="languageSeenFilm">Language in which it was seen</string>
+    <string name="citySeenFilm">City in which it was seen</string>
+    <string name="countrySeenFilm">Country in which it was seen</string>
+    <string name="dateSeenFilm">Date in which it was seen</string>
 </resources>
