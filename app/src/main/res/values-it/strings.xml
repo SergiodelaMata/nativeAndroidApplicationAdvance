@@ -20,4 +20,10 @@
     <string name="citySeenFilm">Città in cui è stato visto</string>
     <string name="countrySeenFilm">Paese in cui è stato visto</string>
     <string name="dateSeenFilm">Data in cui è stato visto</string>
+    <string name="SearchFilmInsert">Cerca il film che vuoi inserire</string>
+    <string name="SearchFilm">Cerca film</string>
+    <string name="SelectInsertFilmText">Selezionare una pellicola da inserire</string>
+    <string name="InsertDataRelatedDateFilmSeen">Inserire i dati relativi alla data in cui si è visto il film</string>
+    <string name="DataRelatedFilmSeen">Dati relativi al film visto</string>
+    <string name="SpecificDataFilmSeen">Dettagli dal film</string>
 </resources>

@@ -19,4 +19,10 @@
     <string name="citySeenFilm">City in which it was seen</string>
     <string name="countrySeenFilm">Country in which it was seen</string>
     <string name="dateSeenFilm">Date in which it was seen</string>
+    <string name="SearchFilmInsert">Search the film you want to insert</string>
+    <string name="SearchFilm">Search film</string>
+    <string name="SelectInsertFilmText">Select a film to be inserted</string>
+    <string name="InsertDataRelatedDateFilmSeen">Insert data related to the date seen the film</string>
+    <string name="DataRelatedFilmSeen">Data related from film seen</string>
+    <string name="SpecificDataFilmSeen">Details from film</string>
 </resources>

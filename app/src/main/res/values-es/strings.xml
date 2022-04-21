@@ -19,5 +19,11 @@
     <string name="languageSeenFilm">Idioma en el que se ha visto</string>
     <string name="citySeenFilm">Ciudad en la que se ha visto</string>
     <string name="countrySeenFilm">País en el que se ha visto</string>
-    <string name="dateSeenFilm">Día en el que se vió</string>
+    <string name="dateSeenFilm">Día en el que se vio</string>
+    <string name="SearchFilmInsert">Busca la película que desea insertar</string>
+    <string name="SearchFilm">Buscar película</string>
+    <string name="SelectInsertFilmText">Seleccione una película para poder ser insertada</string>
+    <string name="InsertDataRelatedDateFilmSeen">Inserte datos de la fecha del día que se vio la película</string>
+    <string name="DataRelatedFilmSeen">Datos relacionados a la película vista</string>
+    <string name="SpecificDataFilmSeen">Detalles de la película</string>
 </resources>
