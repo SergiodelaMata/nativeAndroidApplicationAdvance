@@ -9,8 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
-import com.example.nativeandroidapplicationadvance.Singleton;
-
 import java.util.ArrayList;
 
 public class DBManager extends SQLiteOpenHelper
@@ -27,7 +25,7 @@ public class DBManager extends SQLiteOpenHelper
     private static final String createTableFilmQuery = "CREATE TABLE " + tableFilm +
             "(idFilm INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "title TEXT, " +
-            "year INTEGER, " +
+            "year TEXT, " +
             "duration INTEGER, " +
             "genres TEXT, " +
             "actors TEXT, " +
@@ -64,7 +62,9 @@ public class DBManager extends SQLiteOpenHelper
         try
         {
             Log.i(LOG, "Creando la base de datos de las películas");
-            //TODO ADD INIT FILMS
+            //Se crea la tabla de las películas
+            db.execSQL(createTableFilmQuery);
+            //insertInitData(db);
         }
         catch(final SQLException e)
         {
@@ -135,7 +135,7 @@ public class DBManager extends SQLiteOpenHelper
                 SQLiteStatement statement = db.compileStatement(sql);
 
                 statement.bindString(1, film.getTitle());
-                statement.bindDouble(2, film.getYear());
+                statement.bindString(2, film.getYear());
                 statement.bindDouble(3, film.getDuration());
                 statement.bindString(4, film.getGenres());
                 statement.bindString(5, film.getActors());
@@ -184,7 +184,7 @@ public class DBManager extends SQLiteOpenHelper
             SQLiteStatement statement = db.compileStatement(sql);
 
             statement.bindString(1, film.getTitle());
-            statement.bindDouble(2, film.getYear());
+            statement.bindString(2, film.getYear());
             statement.bindDouble(3, film.getDuration());
             statement.bindString(4, film.getGenres());
             statement.bindString(5, film.getActors());
@@ -238,7 +238,7 @@ public class DBManager extends SQLiteOpenHelper
                     Film film = new Film();
                     film.setIdFilm(cursor.getInt(cursor.getColumnIndexOrThrow("idFilm")));
                     film.setTitle(cursor.getString(cursor.getColumnIndexOrThrow("title")));
-                    film.setYear(cursor.getInt(cursor.getColumnIndexOrThrow("year")));
+                    film.setYear(cursor.getString(cursor.getColumnIndexOrThrow("year")));
                     film.setDuration(cursor.getInt(cursor.getColumnIndexOrThrow("duration")));
                     film.setGenres(cursor.getString(cursor.getColumnIndexOrThrow("genres")));
                     film.setActors(cursor.getString(cursor.getColumnIndexOrThrow("actors")));
@@ -292,7 +292,7 @@ public class DBManager extends SQLiteOpenHelper
                 {
                     film.setIdFilm(cursor.getInt(cursor.getColumnIndexOrThrow("idFilm")));
                     film.setTitle(cursor.getString(cursor.getColumnIndexOrThrow("title")));
-                    film.setYear(cursor.getInt(cursor.getColumnIndexOrThrow("year")));
+                    film.setYear(cursor.getString(cursor.getColumnIndexOrThrow("year")));
                     film.setDuration(cursor.getInt(cursor.getColumnIndexOrThrow("duration")));
                     film.setGenres(cursor.getString(cursor.getColumnIndexOrThrow("genres")));
                     film.setActors(cursor.getString(cursor.getColumnIndexOrThrow("actors")));

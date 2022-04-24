@@ -6,7 +6,7 @@ import java.util.Date;
 public class Film {
     private int idFilm;
     private String title;
-    private int year;
+    private String year;
     private int duration;
     private String genres;
     private String actors;
@@ -22,7 +22,7 @@ public class Film {
     public Film() {
         this.idFilm = 0;
         this.title = "";
-        this.year = 0;
+        this.year = "";
         this.duration = 0;
         this.genres = "";
         this.actors = "";
@@ -36,7 +36,7 @@ public class Film {
         this.dateSeen = "";
     }
 
-    public Film(int idFilm, String title, int year, int duration, String genres, String actors, String director, String countryMade, String originalLanguage, String imagePoster, String languageSeen, String citySeen, String countrySeen, String dateSeen) {
+    public Film(int idFilm, String title, String year, int duration, String genres, String actors, String director, String countryMade, String originalLanguage, String imagePoster, String languageSeen, String citySeen, String countrySeen, String dateSeen) {
         this.idFilm = idFilm;
         this.title = title;
         this.year = year;
@@ -69,11 +69,11 @@ public class Film {
         this.title = title;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
