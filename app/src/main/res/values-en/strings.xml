@@ -26,4 +26,6 @@
     <string name="InsertDataRelatedDateFilmSeen">Insert data related to the date seen the film</string>
     <string name="DataRelatedFilmSeen">Data related from film seen</string>
     <string name="SpecificDataFilmSeen">Details from film</string>
+    <string name="previousPage">Previous page</string>
+    <string name="nextPage">Next page</string>
 </resources>

@@ -26,4 +26,6 @@
     <string name="InsertDataRelatedDateFilmSeen">Insérer les données relatives à la date de visionnage du film</string>
     <string name="DataRelatedFilmSeen">Données relatives au film vu</string>
     <string name="SpecificDataFilmSeen">Détails du film</string>
+    <string name="previousPage">Page précédente</string>
+    <string name="nextPage">Page suivante</string>
 </resources>
