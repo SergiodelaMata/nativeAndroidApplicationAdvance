@@ -58,22 +58,22 @@ public class SelectInsertFilmActivity extends AppCompatActivity {
             String apiKey = "c4b05ab";
             String title = inputTitleFilm.getText().toString();
             String[] titleArray = title.split(" ");
-            String titleText = "";
+            StringBuilder titleText = new StringBuilder();
             for (int i = 0; i < titleArray.length; i++)
             {
                 if(i == 0)
                 {
-                    titleText += titleArray[i];
+                    titleText.append(titleArray[i]);
                 }
                 else
                 {
-                    titleText += "+" + titleArray[i];
+                    titleText.append("+").append(titleArray[i]);
                 }
             }
             String content = "";
             HttpURLConnection urlConnection = null;
-            String finalTitleText = titleText;
-            Log.i(LOG, titleText);
+            String finalTitleText = titleText.toString();
+            Log.i(LOG, titleText.toString());
             Singleton.setFinish(false);
             Thread thread = new Thread(new Runnable() {
                 @Override
