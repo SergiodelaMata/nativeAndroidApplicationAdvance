@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -159,15 +160,24 @@ public class SelectInsertFilmDynamicTable {
                     URL url = null;
                     HttpURLConnection connection = null;
                     try {
-                        url = new URL(finalInfo);
-                        connection = (HttpURLConnection) url
-                                .openConnection();
-                        connection.setDoInput(true);
-                        connection.connect();
-                        InputStream input = connection.getInputStream();
-                        Bitmap bmp = BitmapFactory.decodeStream(input);
                         ImageButton imageButton = new ImageButton(context);
-                        imageButton.setImageBitmap(bmp);
+                        if(!finalInfo.equals("N/A"))
+                        {
+                            url = new URL(finalInfo);
+                            connection = (HttpURLConnection) url
+                                    .openConnection();
+                            connection.setDoInput(true);
+                            connection.connect();
+                            InputStream input = connection.getInputStream();
+                            Bitmap bmp = BitmapFactory.decodeStream(input);
+                            imageButton.setImageBitmap(bmp);
+                        }
+                        else
+                        {
+                            imageButton.setImageResource(R.drawable.film);
+                            imageButton.setBackground(ContextCompat.getDrawable(selectInsertFilmActivity, R.drawable.not_rounded_rectangle_white_no_border));
+                            imageButton.setScaleType(ImageView.ScaleType.FIT_START);
+                        }
                         tableRow.addView(imageButton, newTableRowParams());
                     } catch (Exception e) {
                         Log.e(LOG, e.getMessage());
@@ -180,23 +190,21 @@ public class SelectInsertFilmDynamicTable {
                     buttonFilm.setText(film.getTitle());
                     buttonFilm.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     buttonFilm.setTextColor(Color.parseColor("#000000"));
-                    //buttonFilm.setBackground(ContextCompat.getDrawable(selectInsertFilmActivity, R.drawable.rounded_rectangle_white));
                     buttonFilm.setTextSize(16);
-                    buttonFilm.setGravity(Gravity.CENTER);
-                    buttonFilm.setWidth((int) (getScreenWidth() * 0.58));
-                    buttonFilm.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-                    //buttonFilm.setLayoutParams(new ViewGroup.LayoutParams((int) (getScreenWidth() * 0.58), 100));
+                    buttonFilm.setGravity(Gravity.LEFT);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 100);
+                    buttonFilm.setLayoutParams(layoutParams);
                     buttonFilm.setBackground(ContextCompat.getDrawable(selectInsertFilmActivity, R.drawable.not_rounded_rectangle_white_no_border));
                     buttonFilm.setAllCaps(false);
                     tableRow.addView(buttonFilm, newTableRowParams());
                     //Se establece el acceso a los datos de la asignatura a través de su botón
                     buttonFilm.setOnClickListener(v -> {
                         Bundle bundle = new Bundle();
-                        bundle.putInt("idFilm", film.getIdFilm());
+                        bundle.putString("title", film.getTitle());
                         Intent intent = new Intent(selectInsertFilmActivity, InsertFilmActivity.class);
                         intent.putExtras(bundle);
                         selectInsertFilmActivity.startActivity(intent);
-                        selectInsertFilmActivity.finish();
+                        //selectInsertFilmActivity.finish();
                     });
                     tableRow.setGravity(Gravity.CENTER_VERTICAL);
                     tableRow.setBackground(ContextCompat.getDrawable(selectInsertFilmActivity, R.drawable.rounded_rectangle_white_border_gray));
