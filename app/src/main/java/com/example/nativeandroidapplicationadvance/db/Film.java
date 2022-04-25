@@ -7,7 +7,7 @@ public class Film {
     private int idFilm;
     private String title;
     private String year;
-    private int duration;
+    private String duration;
     private String genres;
     private String actors;
     private String director;
@@ -23,7 +23,7 @@ public class Film {
         this.idFilm = 0;
         this.title = "";
         this.year = "";
-        this.duration = 0;
+        this.duration = "";
         this.genres = "";
         this.actors = "";
         this.director = "";
@@ -36,7 +36,7 @@ public class Film {
         this.dateSeen = "";
     }
 
-    public Film(int idFilm, String title, String year, int duration, String genres, String actors, String director, String countryMade, String originalLanguage, String imagePoster, String languageSeen, String citySeen, String countrySeen, String dateSeen) {
+    public Film(int idFilm, String title, String year, String duration, String genres, String actors, String director, String countryMade, String originalLanguage, String imagePoster, String languageSeen, String citySeen, String countrySeen, String dateSeen) {
         this.idFilm = idFilm;
         this.title = title;
         this.year = year;
@@ -77,11 +77,11 @@ public class Film {
         this.year = year;
     }
 
-    public int getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 

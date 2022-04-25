@@ -26,7 +26,7 @@ public class DBManager extends SQLiteOpenHelper
             "(idFilm INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "title TEXT, " +
             "year TEXT, " +
-            "duration INTEGER, " +
+            "duration TEXT, " +
             "genres TEXT, " +
             "actors TEXT, " +
             "director TEXT, " +
@@ -136,7 +136,7 @@ public class DBManager extends SQLiteOpenHelper
 
                 statement.bindString(1, film.getTitle());
                 statement.bindString(2, film.getYear());
-                statement.bindDouble(3, film.getDuration());
+                statement.bindString(3, film.getDuration());
                 statement.bindString(4, film.getGenres());
                 statement.bindString(5, film.getActors());
                 statement.bindString(6, film.getDirector());
@@ -185,7 +185,7 @@ public class DBManager extends SQLiteOpenHelper
 
             statement.bindString(1, film.getTitle());
             statement.bindString(2, film.getYear());
-            statement.bindDouble(3, film.getDuration());
+            statement.bindString(3, film.getDuration());
             statement.bindString(4, film.getGenres());
             statement.bindString(5, film.getActors());
             statement.bindString(6, film.getDirector());
@@ -239,7 +239,7 @@ public class DBManager extends SQLiteOpenHelper
                     film.setIdFilm(cursor.getInt(cursor.getColumnIndexOrThrow("idFilm")));
                     film.setTitle(cursor.getString(cursor.getColumnIndexOrThrow("title")));
                     film.setYear(cursor.getString(cursor.getColumnIndexOrThrow("year")));
-                    film.setDuration(cursor.getInt(cursor.getColumnIndexOrThrow("duration")));
+                    film.setDuration(cursor.getString(cursor.getColumnIndexOrThrow("duration")));
                     film.setGenres(cursor.getString(cursor.getColumnIndexOrThrow("genres")));
                     film.setActors(cursor.getString(cursor.getColumnIndexOrThrow("actors")));
                     film.setDirector(cursor.getString(cursor.getColumnIndexOrThrow("director")));
@@ -293,7 +293,7 @@ public class DBManager extends SQLiteOpenHelper
                     film.setIdFilm(cursor.getInt(cursor.getColumnIndexOrThrow("idFilm")));
                     film.setTitle(cursor.getString(cursor.getColumnIndexOrThrow("title")));
                     film.setYear(cursor.getString(cursor.getColumnIndexOrThrow("year")));
-                    film.setDuration(cursor.getInt(cursor.getColumnIndexOrThrow("duration")));
+                    film.setDuration(cursor.getString(cursor.getColumnIndexOrThrow("duration")));
                     film.setGenres(cursor.getString(cursor.getColumnIndexOrThrow("genres")));
                     film.setActors(cursor.getString(cursor.getColumnIndexOrThrow("actors")));
                     film.setDirector(cursor.getString(cursor.getColumnIndexOrThrow("director")));
