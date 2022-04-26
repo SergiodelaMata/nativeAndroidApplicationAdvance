@@ -190,6 +190,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center">
+            <!-- Botón de añadir -->
+            <Button
+                android:id="@+id/addFilmButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="5dp"
+                android:textSize="20sp"
+                android:textAllCaps="false"
+                android:text="@string/addFilm"
+                android:background="@drawable/rounded_rectangle_green"
+                android:gravity="center">
+            </Button>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/rounded_rectangle_white"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
