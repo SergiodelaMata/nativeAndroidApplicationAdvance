@@ -184,6 +184,11 @@ public class SelectInsertFilmDynamicTable {
                         ImageButton imageButton = new ImageButton(context);
                         tableRow.addView(imageButton, newTableRowParams());
                     }
+                    finally {
+                        if (connection != null) {
+                            connection.disconnect();
+                        }
+                    }
                     newCell();
                     Button buttonFilm = new Button(context);
                     buttonFilm.setId(film.getIdFilm());
@@ -191,7 +196,7 @@ public class SelectInsertFilmDynamicTable {
                     buttonFilm.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     buttonFilm.setTextColor(Color.parseColor("#000000"));
                     buttonFilm.setTextSize(16);
-                    buttonFilm.setGravity(Gravity.LEFT);
+                    buttonFilm.setGravity(Gravity.START);
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 100);
                     buttonFilm.setLayoutParams(layoutParams);
                     buttonFilm.setBackground(ContextCompat.getDrawable(selectInsertFilmActivity, R.drawable.not_rounded_rectangle_white_no_border));
