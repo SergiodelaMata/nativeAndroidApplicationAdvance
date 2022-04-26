@@ -28,4 +28,5 @@
     <string name="SpecificDataFilmSeen">Details from film</string>
     <string name="previousPage">Previous page</string>
     <string name="nextPage">Next page</string>
+    <string name="addFilm">Add film</string>
 </resources>
