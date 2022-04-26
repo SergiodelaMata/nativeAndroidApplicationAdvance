@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Singleton {
     private static Singleton instance;
     private int[] headerTableTextFilms = {R.string.Poster, R.string.TitleFilm};
+    private static Film film;
     private static ArrayList<Film> listFilms;
     private static ArrayList<TableRow> listTableRows;
     private static boolean finish = false;
@@ -19,6 +20,7 @@ public class Singleton {
         {
             listFilms = new ArrayList<>();
             instance = new Singleton();
+            film = new Film();
             listFilms = new ArrayList<>();
             listTableRows = new ArrayList<>();
             finish = false;
@@ -32,6 +34,14 @@ public class Singleton {
 
     public void setHeaderTableTextSubjects(int[] headerTableTextSubjects) {
         this.headerTableTextFilms = headerTableTextSubjects;
+    }
+
+    public static Film getFilm() {
+        return film;
+    }
+
+    public static void setFilm(Film film) {
+        Singleton.film = film;
     }
 
     public static ArrayList<Film> getListFilms() {
