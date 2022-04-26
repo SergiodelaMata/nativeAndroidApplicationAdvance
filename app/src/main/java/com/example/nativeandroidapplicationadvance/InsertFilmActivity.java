@@ -183,9 +183,9 @@ public class InsertFilmActivity extends AppCompatActivity {
                 finally {
                     if (connection != null) {
                         connection.disconnect();
-                        Singleton.setFinish(true);
-                        notifyFinishInsertDataFilm();
                     }
+                    Singleton.setFinish(true);
+                    notifyFinishInsertDataFilm();
                 }
 
             }
