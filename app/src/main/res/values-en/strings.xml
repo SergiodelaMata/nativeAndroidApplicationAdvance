@@ -29,4 +29,5 @@
     <string name="previousPage">Previous page</string>
     <string name="nextPage">Next page</string>
     <string name="addFilm">Add film</string>
+    <string name="totalResults">Total results:</string>
 </resources>
