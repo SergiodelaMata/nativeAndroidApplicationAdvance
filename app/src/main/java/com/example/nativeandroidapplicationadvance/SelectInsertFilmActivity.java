@@ -83,8 +83,6 @@ public class SelectInsertFilmActivity extends AppCompatActivity {
                     titleText.append("+").append(titleArray[i]);
                 }
             }
-            String content = "";
-            HttpURLConnection urlConnection = null;
             String finalTitleText = titleText.toString();
             Log.i(LOG, titleText.toString());
             Singleton.setFinish(false);
@@ -204,8 +202,6 @@ public class SelectInsertFilmActivity extends AppCompatActivity {
                     titleText.append("+").append(titleArray[i]);
                 }
             }
-            String content = "";
-            HttpURLConnection urlConnection = null;
             String finalTitleText = titleText.toString();
             Log.i(LOG, titleText.toString());
             Singleton.setFinish(false);
@@ -331,8 +327,6 @@ public class SelectInsertFilmActivity extends AppCompatActivity {
                     titleText.append("+").append(titleArray[i]);
                 }
             }
-            String content = "";
-            HttpURLConnection urlConnection = null;
             String finalTitleText = titleText.toString();
             Log.i(LOG, titleText.toString());
             Singleton.setFinish(false);
