@@ -13,6 +13,9 @@ public class Singleton {
     private static ArrayList<Film> listFilms;
     private static ArrayList<TableRow> listTableRows;
     private static boolean finish = false;
+    private static String titleFilm;
+    private static int numberPage;
+    private static int totalResults;
 
     public static synchronized Singleton getInstance()
     {
@@ -24,6 +27,9 @@ public class Singleton {
             listFilms = new ArrayList<>();
             listTableRows = new ArrayList<>();
             finish = false;
+            titleFilm = "";
+            numberPage = 0;
+            totalResults = 0;
         }
         return instance;
     }
@@ -66,5 +72,29 @@ public class Singleton {
 
     public static void setFinish(boolean finish) {
         Singleton.finish = finish;
+    }
+
+    public static String getTitleFilm() {
+        return titleFilm;
+    }
+
+    public static void setTitleFilm(String titleFilm) {
+        Singleton.titleFilm = titleFilm;
+    }
+
+    public static synchronized int getNumberPage() {
+        return numberPage;
+    }
+
+    public static synchronized void setNumberPage(int numberPage) {
+        Singleton.numberPage = numberPage;
+    }
+
+    public static synchronized int getTotalResults() {
+        return totalResults;
+    }
+
+    public static synchronized void setTotalResults(int totalResults) {
+        Singleton.totalResults = totalResults;
     }
 }
