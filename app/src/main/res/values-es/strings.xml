@@ -30,4 +30,8 @@
     <string name="nextPage">Página posterior</string>
     <string name="addFilm">Añadir película</string>
     <string name="totalResults">Total de resultados:</string>
+    <string name="AlertErrorSendInsert">Error añadiendo la película vista</string>
+    <string name="MessageErrorSendInsert">Error añadiendo la película vista. Por favor, inténtelo más tarde.</string>
+    <string name="AlertNoRequiredData">Datos necesarios no disponibles</string>
+    <string name="MessageNoRequiredData">Algunos de los datos requeridos no se han establecido. Por favor, introduzca los datos del idioma, la fecha, la ciudad y el país en el que se vio la película.</string>
 </resources>

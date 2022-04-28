@@ -30,4 +30,8 @@
     <string name="nextPage">Next page</string>
     <string name="addFilm">Add film</string>
     <string name="totalResults">Total results:</string>
+    <string name="AlertErrorSendInsert">Error adding the film seen</string>
+    <string name="MessageErrorSendInsert">Error adding the film seen. Please, try it again later.</string>
+    <string name="AlertNoRequiredData">Required data not available</string>
+    <string name="MessageNoRequiredData">Some of the required data have not been establish. Please introduce the data from the language, the date, the city and the country in which it was seen the film.</string>
 </resources>
