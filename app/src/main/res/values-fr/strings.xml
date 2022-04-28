@@ -15,7 +15,7 @@
     <string name="OtherActorsFilm">Autres acteurs</string>
     <string name="DirectorFilm">Directeur</string>
     <string name="countryMadeFilm">Pays d\'origine</string>
-    <string name="originalLanguageFilm">Langue originale</string>
+    <string name="originalLanguageFilm">Langues officielles</string>
     <string name="languageSeenFilm">Langue dans laquelle il a été vu</string>
     <string name="citySeenFilm">Ville dans laquelle il a été vu</string>
     <string name="countrySeenFilm">Pays dans lequel il a été vu</string>
@@ -34,4 +34,6 @@
     <string name="MessageErrorSendInsert">Erreur lors de l\'ajout du film vu. Veuillez réessayer plus tard.</string>
     <string name="AlertNoRequiredData">Données requises non disponibles</string>
     <string name="MessageNoRequiredData">Certaines des données requises n\'ont pas été établies. Veuillez introduire les données de la langue, la date, la ville et le pays dans lequel il a été vu le film.</string>
+    <string name="ModifyDataFilm">Modifier les données</string>
+    <string name="DeleteDataFilm">Supprimer des données</string>
 </resources>

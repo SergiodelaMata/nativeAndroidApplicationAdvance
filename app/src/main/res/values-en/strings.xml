@@ -15,7 +15,7 @@
     <string name="OtherActorsFilm">Other actors</string>
     <string name="DirectorFilm">Director</string>
     <string name="countryMadeFilm">Original country</string>
-    <string name="originalLanguageFilm">Original language</string>
+    <string name="originalLanguageFilm">Official languages</string>
     <string name="languageSeenFilm">Language in which it was seen</string>
     <string name="citySeenFilm">City in which it was seen</string>
     <string name="countrySeenFilm">Country in which it was seen</string>
@@ -34,4 +34,6 @@
     <string name="MessageErrorSendInsert">Error adding the film seen. Please, try it again later.</string>
     <string name="AlertNoRequiredData">Required data not available</string>
     <string name="MessageNoRequiredData">Some of the required data have not been establish. Please introduce the data from the language, the date, the city and the country in which it was seen the film.</string>
+    <string name="ModifyDataFilm">Modify data</string>
+    <string name="DeleteDataFilm">Delete data</string>
 </resources>
