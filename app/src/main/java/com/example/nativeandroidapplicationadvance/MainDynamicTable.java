@@ -2,11 +2,17 @@ package com.example.nativeandroidapplicationadvance;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -15,6 +21,9 @@ import androidx.core.content.ContextCompat;
 
 import com.example.nativeandroidapplicationadvance.db.Film;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MainDynamicTable {
@@ -133,7 +142,86 @@ public class MainDynamicTable {
      */
     private void createDataTable()
     {
-        String info;
+        ArrayList<TableRow> listTableRow = new ArrayList<>();
+        Singleton.setFinish(false);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(indexRow = 0; indexRow < data.size(); indexRow++) {
+                    newRow();
+                    Film film = data.get(indexRow);
+                    String finalInfo = String.valueOf(film.getImagePoster());
+
+                    newCell();
+                    URL url = null;
+                    HttpURLConnection connection = null;
+                    try {
+                        ImageButton imageButton = new ImageButton(context);
+                        if(!finalInfo.equals("N/A"))
+                        {
+                            url = new URL(finalInfo);
+                            connection = (HttpURLConnection) url
+                                    .openConnection();
+                            connection.setDoInput(true);
+                            connection.connect();
+                            InputStream input = connection.getInputStream();
+                            Bitmap bmp = BitmapFactory.decodeStream(input);
+                            imageButton.setImageBitmap(bmp);
+                        }
+                        else
+                        {
+                            imageButton.setImageResource(R.drawable.film);
+                            imageButton.setBackground(ContextCompat.getDrawable(mainActivity, R.drawable.not_rounded_rectangle_white_no_border));
+                            imageButton.setScaleType(ImageView.ScaleType.FIT_START);
+                        }
+                        tableRow.addView(imageButton, newTableRowParams());
+                    } catch (Exception e) {
+                        Log.e(LOG, e.getMessage());
+                        ImageButton imageButton = new ImageButton(context);
+                        tableRow.addView(imageButton, newTableRowParams());
+                    }
+                    finally {
+                        if (connection != null) {
+                            connection.disconnect();
+                        }
+                    }
+                    newCell();
+                    Button buttonFilm = new Button(context);
+                    buttonFilm.setId(film.getIdFilm());
+                    buttonFilm.setText(film.getTitle());
+                    buttonFilm.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    buttonFilm.setTextColor(Color.parseColor("#000000"));
+                    buttonFilm.setTextSize(16);
+                    buttonFilm.setGravity(Gravity.START);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 100);
+                    buttonFilm.setLayoutParams(layoutParams);
+                    buttonFilm.setBackground(ContextCompat.getDrawable(mainActivity, R.drawable.not_rounded_rectangle_white_no_border));
+                    buttonFilm.setAllCaps(false);
+                    tableRow.addView(buttonFilm, newTableRowParams());
+                    //Se establece el acceso a los datos de la asignatura a través de su botón
+                    buttonFilm.setOnClickListener(v -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("idFilm", film.getIdFilm());
+                        //bundle.putString("title", film.getTitle());
+                        Intent intent = new Intent(mainActivity, CheckModifyDeleteActivity.class);
+                        intent.putExtras(bundle);
+                        mainActivity.startActivity(intent);
+                        mainActivity.finish();
+                    });
+                    tableRow.setGravity(Gravity.CENTER_VERTICAL);
+                    tableRow.setBackground(ContextCompat.getDrawable(mainActivity, R.drawable.rounded_rectangle_white_border_gray));
+
+                    listTableRow.add(tableRow);
+                }
+                Singleton.setFinish(true);
+                Singleton.setListTableRows(listTableRow);
+                notifyFinishBuildStructureTable();
+            }
+        });
+        thread.start();
+        buildTable();
+
+        /*String info;
 
         for(indexRow = 0; indexRow < data.size(); indexRow++)
         {
@@ -177,6 +265,38 @@ public class MainDynamicTable {
             }
             tableRow.setGravity(Gravity.CENTER_VERTICAL);
             tableLayout.addView(tableRow);
+        }*/
+    }
+
+    public synchronized void notifyFinishBuildStructureTable() {
+        notifyAll();
+    }
+
+    public synchronized void waitFinishThread() {
+        try {
+            while (!Singleton.isFinish()) {
+                wait();
+            }
+        } catch (InterruptedException e) {
+            Log.e(LOG, e.getMessage());
+        }
+    }
+
+    private synchronized void buildTable()
+    {
+        ArrayList<TableRow> listTableRow = new ArrayList<>();
+        try {
+            while(!Singleton.isFinish())
+            {
+                wait();
+            }
+            listTableRow = Singleton.getListTableRows();
+            for(int i = 0; i < listTableRow.size(); i++) {
+                tableLayout.addView(listTableRow.get(i));
+            }
+        }
+        catch (InterruptedException e) {
+            Log.e(LOG, e.getMessage());
         }
     }
 
