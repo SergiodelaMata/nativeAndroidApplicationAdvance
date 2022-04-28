@@ -3,19 +3,19 @@ package com.example.nativeandroidapplicationadvance;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.nativeandroidapplicationadvance.db.DBManager;
 import com.example.nativeandroidapplicationadvance.db.Film;
 
 import org.json.JSONObject;
@@ -38,6 +38,8 @@ public class InsertFilmActivity extends AppCompatActivity {
         insertFilmActivity = this;
         setContentView(R.layout.activity_insert_film);
 
+        DBManager dbManager = new DBManager(this);
+
         TextView titleTextView = findViewById(R.id.titleFilm);
         ImageView posterImageView = findViewById(R.id.imageFilm);
 
@@ -45,6 +47,8 @@ public class InsertFilmActivity extends AppCompatActivity {
         EditText dateSeenFilmEditText = findViewById(R.id.dateSeenFilm);
         EditText citySeenFilmEditText = findViewById(R.id.citySeenFilm);
         EditText countrySeenFilmEditText = findViewById(R.id.countrySeenFilm);
+
+        Button buttonAddFilmButton = findViewById(R.id.addFilmButton);
 
         EditText yearEditText = findViewById(R.id.yearProductionFilm);
         EditText durationEditText = findViewById(R.id.durationFilm);
@@ -58,24 +62,54 @@ public class InsertFilmActivity extends AppCompatActivity {
 
         dateSeenFilmEditText.setHint("dd/mm/yyyy");
 
-        dateSeenFilmEditText.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
-                int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-                int mMonth = calendar.get(Calendar.MONTH);
-                int mYear = calendar.get(Calendar.YEAR);
-
-                datePickerDialog = new DatePickerDialog(insertFilmActivity, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
-                        String date = dayOfMonth + "/" + (month + 1) + "/" + year;
-                        dateSeenFilmEditText.setText(date);
-                    }
-                }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-
+        buttonAddFilmButton.setOnClickListener(view -> {
+            String languageSeenFilm = languageSeenFilmEditText.getText().toString();
+            String dateSeenFilm = dateSeenFilmEditText.getText().toString();
+            String citySeenFilm = citySeenFilmEditText.getText().toString();
+            String countrySeenFilm = countrySeenFilmEditText.getText().toString();
+            if (languageSeenFilm.isEmpty() || dateSeenFilm.isEmpty() || citySeenFilm.isEmpty() || countrySeenFilm.isEmpty()) {
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.AlertNoRequiredData)
+                        .setMessage(R.string.MessageNoRequiredData)
+                        .show();
             }
+            else {
+                Film film = Singleton.getFilm();
+                film.setLanguageSeen(languageSeenFilm);
+                film.setDateSeen(dateSeenFilm);
+                film.setCitySeen(citySeenFilm);
+                film.setCountrySeen(countrySeenFilm);
+                boolean verify = dbManager.newFilm(film, null);
+                if(verify)
+                {
+                    Intent intent = new Intent(InsertFilmActivity.this, MainActivity.class);
+                    this.startActivity(intent);
+                    finish();
+                }
+                else
+                {
+                    new AlertDialog.Builder(this)
+                            .setTitle(R.string.AlertErrorSendInsert)
+                            .setMessage(R.string.MessageErrorSendInsert)
+                            .show();
+                }
+            }
+       });
+
+        dateSeenFilmEditText.setOnClickListener(view -> {
+            final Calendar calendar = Calendar.getInstance();
+            int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+            int mMonth = calendar.get(Calendar.MONTH);
+            int mYear = calendar.get(Calendar.YEAR);
+
+            datePickerDialog = new DatePickerDialog(insertFilmActivity, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
+                    String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+                    dateSeenFilmEditText.setText(date);
+                }
+            }, mYear, mMonth, mDay);
+            datePickerDialog.show();
         });
 
         Intent intentSaved = getIntent();
