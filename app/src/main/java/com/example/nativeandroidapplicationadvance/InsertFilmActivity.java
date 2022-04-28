@@ -48,7 +48,7 @@ public class InsertFilmActivity extends AppCompatActivity {
         EditText citySeenFilmEditText = findViewById(R.id.citySeenFilm);
         EditText countrySeenFilmEditText = findViewById(R.id.countrySeenFilm);
 
-        Button buttonAddFilmButton = findViewById(R.id.addFilmButton);
+        Button buttonAddFilm = findViewById(R.id.addFilmButton);
 
         EditText yearEditText = findViewById(R.id.yearProductionFilm);
         EditText durationEditText = findViewById(R.id.durationFilm);
@@ -62,7 +62,7 @@ public class InsertFilmActivity extends AppCompatActivity {
 
         dateSeenFilmEditText.setHint("dd/mm/yyyy");
 
-        buttonAddFilmButton.setOnClickListener(view -> {
+        buttonAddFilm.setOnClickListener(view -> {
             String languageSeenFilm = languageSeenFilmEditText.getText().toString();
             String dateSeenFilm = dateSeenFilmEditText.getText().toString();
             String citySeenFilm = citySeenFilmEditText.getText().toString();
@@ -163,6 +163,7 @@ public class InsertFilmActivity extends AppCompatActivity {
                         {
                             Log.i(LOG, "Response: " + jsonObject.getString("Response"));
                             Film film = new Film();
+                            film.setTitle(jsonObject.getString("Title"));
                             film.setImagePoster(jsonObject.getString("Poster"));
                             film.setYear(jsonObject.getString("Year"));
                             film.setDuration(jsonObject.getString("Runtime"));

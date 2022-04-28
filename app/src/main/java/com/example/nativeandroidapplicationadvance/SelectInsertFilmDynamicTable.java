@@ -255,8 +255,6 @@ public class SelectInsertFilmDynamicTable {
         catch (InterruptedException e) {
             Log.e(LOG, e.getMessage());
         }
-
-
     }
 
     /**
