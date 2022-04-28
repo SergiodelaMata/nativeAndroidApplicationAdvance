@@ -128,7 +128,8 @@
                     android:background="@drawable/rounded_rectangle_white"
                     android:textColor="@color/black"
                     android:gravity="start"
-                    android:inputType="datetime" />
+                    android:focusableInTouchMode="false"
+                    android:inputType="date"/>
             </LinearLayout>
             <!-- Campo de introducción de la ciudad en la que se vió -->
             <LinearLayout

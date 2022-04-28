@@ -3,31 +3,34 @@ package com.example.nativeandroidapplicationadvance;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nativeandroidapplicationadvance.db.Film;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class InsertFilmActivity extends AppCompatActivity {
     //Etiqueta logcat
     private static final String LOG = "InsFilmActivity";
     private InsertFilmActivity insertFilmActivity;
+    private DatePickerDialog datePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,12 @@ public class InsertFilmActivity extends AppCompatActivity {
 
         TextView titleTextView = findViewById(R.id.titleFilm);
         ImageView posterImageView = findViewById(R.id.imageFilm);
+
+        EditText languageSeenFilmEditText = findViewById(R.id.languageSeenFilm);
+        EditText dateSeenFilmEditText = findViewById(R.id.dateSeenFilm);
+        EditText citySeenFilmEditText = findViewById(R.id.citySeenFilm);
+        EditText countrySeenFilmEditText = findViewById(R.id.countrySeenFilm);
+
         EditText yearEditText = findViewById(R.id.yearProductionFilm);
         EditText durationEditText = findViewById(R.id.durationFilm);
         EditText genreEditText = findViewById(R.id.genreFilm);
@@ -47,6 +56,27 @@ public class InsertFilmActivity extends AppCompatActivity {
         EditText countryEditText = findViewById(R.id.countryFilm);
         EditText originalLanguageEditText = findViewById(R.id.originalLanguageFilm);
 
+        dateSeenFilmEditText.setHint("dd/mm/yyyy");
+
+        dateSeenFilmEditText.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+                int mMonth = calendar.get(Calendar.MONTH);
+                int mYear = calendar.get(Calendar.YEAR);
+
+                datePickerDialog = new DatePickerDialog(insertFilmActivity, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
+                        String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+                        dateSeenFilmEditText.setText(date);
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+
+            }
+        });
 
         Intent intentSaved = getIntent();
         Bundle bundle = intentSaved.getExtras();
