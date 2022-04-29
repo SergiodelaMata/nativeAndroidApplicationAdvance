@@ -118,48 +118,6 @@ public class DBManager extends SQLiteOpenHelper
         }
     }
 
-    private void insertInitData(SQLiteDatabase pDB)
-    {
-        SQLiteDatabase db = pDB;
-        //ArrayList<Film> films = Singleton.getInstance().getListFilms();
-        ArrayList<Film> films = new ArrayList<>();
-        try
-        {
-            for(int i = 0; i < films.size(); i++)
-            {
-                Film film = films.get(i);
-
-                final String sql = INSERT_INTO + tableFilm +
-                        "(title, year, duration, genres, actors, director, countryMade, originalLanguage, imagePoster, languageSeen, citySeen, countrySeen, dateSeen) " +
-                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
-                SQLiteStatement statement = db.compileStatement(sql);
-
-                statement.bindString(1, film.getTitle());
-                statement.bindString(2, film.getYear());
-                statement.bindString(3, film.getDuration());
-                statement.bindString(4, film.getGenres());
-                statement.bindString(5, film.getActors());
-                statement.bindString(6, film.getDirector());
-                statement.bindString(7, film.getCountryMade());
-                statement.bindString(8, film.getOriginalLanguage());
-                statement.bindString(9, film.getImagePoster());
-                statement.bindString(10, film.getLanguageSeen());
-                statement.bindString(11, film.getCitySeen());
-                statement.bindString(12, film.getCountrySeen());
-                statement.bindString(13, film.getDateSeen());
-                statement.executeInsert();
-            }
-        }
-        catch(final SQLException e)
-        {
-            e.printStackTrace();
-        }
-        catch (RuntimeException e)
-        {
-            Log.e(LOG, "Error al realizar la inserción de datos inicial.");
-        }
-    }
-
     /**
      * Realiza la inserción de los datos de una película a la base de datos
      * @param film Datos de la película
@@ -233,6 +191,10 @@ public class DBManager extends SQLiteOpenHelper
             Cursor cursor = db.rawQuery(selectQuery, null);
             if(cursor.moveToFirst())
             {
+                /*
+                    Se recorre el cursor hasta que no haya más registros de las asignaturas en la base de datos,
+                    y se añade a la lista de películas los datos almacenados en la misma
+                 */
                 do
                 {
                     Film film = new Film();
@@ -288,6 +250,9 @@ public class DBManager extends SQLiteOpenHelper
             Cursor cursor = db.rawQuery(selectQuery, null);
             if(cursor.moveToFirst())
             {
+                /*
+                    Se obtiene los datos de la película a partir de la consulta a la base de datos
+                 */
                 do
                 {
                     film.setIdFilm(cursor.getInt(cursor.getColumnIndexOrThrow("idFilm")));
@@ -332,6 +297,7 @@ public class DBManager extends SQLiteOpenHelper
     {
         try
         {
+            // Se ejecuta la consulta para actualizar los datos de la película a partir del id de la película
             SQLiteDatabase db = getReadableDatabase();
             ContentValues values = new ContentValues();
             values.put("title", film.getTitle());
@@ -369,8 +335,8 @@ public class DBManager extends SQLiteOpenHelper
     {
         try
         {
+            // Se ejecuta la consulta para eliminar la película a partir del id de la película
             SQLiteDatabase db = getReadableDatabase();
-
             db.delete(tableFilm, "idFilm=" + idFilm, null);
 
         }

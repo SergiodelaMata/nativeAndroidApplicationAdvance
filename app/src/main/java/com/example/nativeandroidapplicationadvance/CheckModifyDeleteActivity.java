@@ -64,17 +64,29 @@ public class CheckModifyDeleteActivity extends AppCompatActivity {
 
         dateSeenFilmEditText.setHint("dd/mm/yyyy");
 
+        /*
+            Establece el comportamiento de comprobación y modificación de los datos de la película una
+            vez presiona el botón para actualizar de datos
+         */
         buttonModifyDataFilm.setOnClickListener(view -> {
             String languageSeenFilm = languageSeenFilmEditText.getText().toString();
             String dateSeenFilm = dateSeenFilmEditText.getText().toString();
             String citySeenFilm = citySeenFilmEditText.getText().toString();
             String countrySeenFilm = countrySeenFilmEditText.getText().toString();
-            if (languageSeenFilm.isEmpty() || dateSeenFilm.isEmpty() || citySeenFilm.isEmpty() || countrySeenFilm.isEmpty()) {
+            /*
+                Comprobación de que los campos obligatorios no estén vacíos. En caso de estar vacíos,
+                se muestra un mensaje de error.
+             */
+            if (languageSeenFilm.isEmpty() || dateSeenFilm.isEmpty() || citySeenFilm.isEmpty() || countrySeenFilm.isEmpty())
+            {
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.AlertNoRequiredData)
                         .setMessage(R.string.MessageNoRequiredData)
                         .show();
-            } else {
+            }
+            // En caso de que los campos obligatorios no estén vacíos, se procede a la modificación de los datos
+            else
+            {
                 Film film = Singleton.getFilm();
                 film.setLanguageSeen(languageSeenFilm);
                 film.setDateSeen(dateSeenFilm);
@@ -87,6 +99,10 @@ public class CheckModifyDeleteActivity extends AppCompatActivity {
             }
         });
 
+        /*
+            Establece el funcionamiento del botón de borrar datos de la película y establece la
+            redirección a la actividad principal una vez se haya borrado la película.
+         */
         buttonDeleteDataFilm.setOnClickListener(view -> {
             Intent intentSaved = getIntent();
             Bundle bundle = intentSaved.getExtras();
@@ -97,12 +113,17 @@ public class CheckModifyDeleteActivity extends AppCompatActivity {
             finish();
         });
 
+        /*
+            Establece el comportamiento del campo para insertar la fecha en la que se vió la película
+            para se pueda introducir una fecha válida a través de un calendario
+         */
         dateSeenFilmEditText.setOnClickListener(view -> {
             final Calendar calendar = Calendar.getInstance();
             int mDay = calendar.get(Calendar.DAY_OF_MONTH);
             int mMonth = calendar.get(Calendar.MONTH);
             int mYear = calendar.get(Calendar.YEAR);
 
+            //Establece el formato en el que se verá la fecha una vez seleccionada la fecha
             datePickerDialog = new DatePickerDialog(checkModifyDeleteActivity, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
@@ -113,11 +134,18 @@ public class CheckModifyDeleteActivity extends AppCompatActivity {
             datePickerDialog.show();
         });
 
+        /*
+            Obtiene los datos guardados de la actividad anterior y se recoge el id de la película
+            para buscar información de la base de datos y posteriormente rellenar todos los campos
+            a partir de la información obtenida
+         */
         Intent intentSaved = getIntent();
         Bundle bundle = intentSaved.getExtras();
         int idFilm = bundle.getInt("idFilm");
         Film film = dbManager.getFilm(idFilm);
+        //Se guardan los datos de la película en el Singleton desde cualquier parte de la actividad
         Singleton.setFilm(film);
+        //Se rellenan los campos con los datos de la película
         idFilmTextFilm.setText(String.valueOf(film.getIdFilm()));
         titleTextView.setText(film.getTitle());
         languageSeenFilmEditText.setText(film.getLanguageSeen());
@@ -129,11 +157,22 @@ public class CheckModifyDeleteActivity extends AppCompatActivity {
         genreEditText.setText(film.getGenres());
         String listActorsText = film.getActors();
         String[] listActors = listActorsText.split(",");
+        /*
+            A partir del listado completo de actores, se separa el primer actor del resto para que
+            el primero aparezca en uno de los campos como actor principal y el resto en otro campo
+            como actores secundarios u otros miembros del reparto
+         */
         StringBuilder listOtherActors = new StringBuilder();
-        for (int i = 1; i < listActors.length; i++) {
-            if (i == 1) {
+        for (int i = 1; i < listActors.length; i++)
+        {
+            // Si es el primero, se guarda solo el campo del nombre del actor
+            if(i == 1)
+            {
                 listOtherActors = new StringBuilder(listActors[i]);
-            } else {
+            }
+            // Si no es el primero, se guarda el nombre del actor y una coma para separarlo del resto
+            else
+            {
                 listOtherActors.append(",").append(listActors[i]);
             }
         }
@@ -144,13 +183,26 @@ public class CheckModifyDeleteActivity extends AppCompatActivity {
         countryEditText.setText(film.getCountryMade());
         originalLanguageEditText.setText(film.getOriginalLanguage());
 
+        /*
+            Se inicializa el valor del booleano del Singleton para hacer que el hilo principal lo tenga
+            en cuenta una vez que se inicie el nuevo hilo y le toque esperar a termine
+         */
         Singleton.setFinish(false);
+        /*
+            Se crea un nuevo hilo para poder generar la imagen de la película de forma asíncrona a partir de
+            su URL
+         */
         Thread threadImage = new Thread(new Runnable() {
             @Override
             public void run() {
                 URL url = null;
                 HttpURLConnection connection = null;
                 try {
+                    /*
+                        Se comprueba si el campo relacionado a la imagen de la película cuenta con
+                        una URL o no. En caso de haber una URL, se establece la conexión y se
+                        establece la imagen a través de la URL
+                     */
                     if (!Singleton.getFilm().getImagePoster().equals("N/A")) {
                         url = new URL(Singleton.getFilm().getImagePoster());
                         connection = (HttpURLConnection) url
@@ -160,13 +212,23 @@ public class CheckModifyDeleteActivity extends AppCompatActivity {
                         InputStream input = connection.getInputStream();
                         Bitmap bmp = BitmapFactory.decodeStream(input);
                         posterImageView.setImageBitmap(bmp);
-                    } else {
+                    }
+                    /*
+                        En caso de no haber una URL, se establece la imagen por defecto
+                     */
+                    else
+                    {
                         posterImageView.setImageResource(R.drawable.film);
                         posterImageView.setBackground(ContextCompat.getDrawable(checkModifyDeleteActivity, R.drawable.not_rounded_rectangle_white_no_border));
                     }
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     Log.e(LOG, e.getMessage());
-                } finally {
+                }
+                finally
+                {
+                    // Se cierra la conexión en caso de haberla abierta
                     if (connection != null) {
                         connection.disconnect();
                     }
@@ -175,14 +237,24 @@ public class CheckModifyDeleteActivity extends AppCompatActivity {
                 }
             }
         });
+        // Se inicia el hilo creado para obtener la imagen de la película
         threadImage.start();
+        // El hilo principal se queda esperando a que el hilo creado termine
         waitFinishThread();
     }
 
+    /**
+     * Notifica al hilo principal que ya se han obtenido los datos de la película e introducido en
+     * los distintos campos de la actividad
+     */
     private synchronized void notifyFinishInsertDataFilm() {
         notifyAll();
     }
 
+    /**
+     * Establece la espera del hilo principal hasta que el hilo creado termine de obtener los datos
+     * de la película y los introduzca en los distintos campos de la actividad
+     */
     private synchronized void waitFinishThread() {
         try {
             while (!Singleton.isFinish()) {
@@ -192,8 +264,6 @@ public class CheckModifyDeleteActivity extends AppCompatActivity {
             Log.e(LOG, e.getMessage());
         }
     }
-
-
 
     /*
         Establece la redirección si se presiona el botón para ir hacia atrás a la actividad principal

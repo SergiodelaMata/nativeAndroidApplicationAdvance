@@ -45,6 +45,13 @@ public class SelectInsertFilmDynamicTable {
     private int indexCell;
     private int indexRow;
 
+    /**
+     * Constructor de la tabla dinámica
+     * @param selectInsertFilmActivity Actividad para la búsqueda de películas para la selección de
+     *        una película y su inserción en la base de datos
+     * @param tableLayout Tabla donde se añadirán los datos
+     * @param context Contexto de la aplicación
+     */
     public SelectInsertFilmDynamicTable(SelectInsertFilmActivity selectInsertFilmActivity, TableLayout tableLayout, Context context) {
         this.selectInsertFilmActivity = selectInsertFilmActivity;
         this.tableLayout = tableLayout;
@@ -147,10 +154,19 @@ public class SelectInsertFilmDynamicTable {
      */
     private void createDataTable() {
         ArrayList<TableRow> listTableRow = new ArrayList<>();
+        /*
+            Se inicializa el valor del booleano del Singleton para hacer que el hilo principal lo tenga
+            en cuenta una vez que se inicie el nuevo hilo y le toque esperar a termine
+         */
         Singleton.setFinish(false);
+        /*
+            Se crea un nuevo hilo para poder generar la tabla de forma asíncrona y así poder establecer
+            las imágenes de las películas que se obtienen de una URL
+         */
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                // Se crea una nueva fila para la tabla
                 for(indexRow = 0; indexRow < data.size(); indexRow++) {
                     newRow();
                     Film film = data.get(indexRow);
@@ -161,6 +177,11 @@ public class SelectInsertFilmDynamicTable {
                     HttpURLConnection connection = null;
                     try {
                         ImageButton imageButton = new ImageButton(context);
+                        /*
+                            Se comprueba si tiene una una URL la imagen o no para mostrar una imagen
+                            por defecto o no. En caso de haber una URL, se establece la conexión y se
+                            establece la imagen a través de la URL
+                         */
                         if(!finalInfo.equals("N/A"))
                         {
                             url = new URL(finalInfo);
@@ -172,12 +193,24 @@ public class SelectInsertFilmDynamicTable {
                             Bitmap bmp = BitmapFactory.decodeStream(input);
                             imageButton.setImageBitmap(bmp);
                         }
+                        /*
+                            En caso de no haber una URL, se establece la imagen por defecto
+                         */
                         else
                         {
                             imageButton.setImageResource(R.drawable.film);
                             imageButton.setBackground(ContextCompat.getDrawable(selectInsertFilmActivity, R.drawable.not_rounded_rectangle_white_no_border));
                             imageButton.setScaleType(ImageView.ScaleType.FIT_START);
                         }
+                        //Se establece el acceso a la sección para añadir la película al presionar la imagen de la película
+                        imageButton.setOnClickListener(v -> {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("title", film.getTitle());
+                            Intent intent = new Intent(selectInsertFilmActivity, InsertFilmActivity.class);
+                            intent.putExtras(bundle);
+                            selectInsertFilmActivity.startActivity(intent);
+                        });
+                        // Se introduce la imagen en la celda correspondiente a la fila que se está creando de la tabla
                         tableRow.addView(imageButton, newTableRowParams());
                     } catch (Exception e) {
                         Log.e(LOG, e.getMessage());
@@ -185,10 +218,12 @@ public class SelectInsertFilmDynamicTable {
                         tableRow.addView(imageButton, newTableRowParams());
                     }
                     finally {
+                        // Se cierra la conexión en caso de haberla abierta
                         if (connection != null) {
                             connection.disconnect();
                         }
                     }
+                    // Se crea la nueva celda para el botón para acceder a la sección para añadir la película
                     newCell();
                     Button buttonFilm = new Button(context);
                     buttonFilm.setId(film.getIdFilm());
@@ -202,35 +237,48 @@ public class SelectInsertFilmDynamicTable {
                     buttonFilm.setBackground(ContextCompat.getDrawable(selectInsertFilmActivity, R.drawable.not_rounded_rectangle_white_no_border));
                     buttonFilm.setAllCaps(false);
                     tableRow.addView(buttonFilm, newTableRowParams());
-                    //Se establece el acceso a los datos de la asignatura a través de su botón
+                    //Se establece el acceso a la sección para añadir la película al presionar el título de la película
                     buttonFilm.setOnClickListener(v -> {
                         Bundle bundle = new Bundle();
                         bundle.putString("title", film.getTitle());
                         Intent intent = new Intent(selectInsertFilmActivity, InsertFilmActivity.class);
                         intent.putExtras(bundle);
                         selectInsertFilmActivity.startActivity(intent);
-                        //selectInsertFilmActivity.finish();
                     });
                     tableRow.setGravity(Gravity.CENTER_VERTICAL);
                     tableRow.setBackground(ContextCompat.getDrawable(selectInsertFilmActivity, R.drawable.rounded_rectangle_white_border_gray));
-
                     listTableRow.add(tableRow);
                 }
+                /*
+                    Se indica que ha terminado el hilo, se guarda en el Singleton la estructura creada
+                    para la tabla puesto que solo lo puede actualizar el hilo principal y se notifica al
+                    hilo principal para que pueda continuar con su ejecución
+                 */
                 Singleton.setFinish(true);
                 Singleton.setListTableRows(listTableRow);
                 notifyFinishBuildStructureTable();
             }
         });
+        // Se inicia el hilo creado para la creación de la estructura de la tabla
         thread.start();
+        // Se genera la estructura de la tabla
         buildTable();
     }
 
+    /**
+     * Notifica al hilo principal que ha terminado de crear la estructura de la tabla
+     */
     public synchronized void notifyFinishBuildStructureTable() {
         notifyAll();
     }
 
+    /**
+     * Establece la espera del hilo principal hasta que el hilo creado termine de montar la
+     * estructura de la tabla
+     */
     public synchronized void waitFinishThread() {
         try {
+            // Se espera a que termine el hilo creado para la creación de la estructura de la tabla
             while (!Singleton.isFinish()) {
                 wait();
             }
@@ -239,6 +287,9 @@ public class SelectInsertFilmDynamicTable {
         }
     }
 
+    /**
+     * Genera la estructura de la tabla dentro de la interfaz de la actividad
+     */
     private synchronized void buildTable()
     {
         ArrayList<TableRow> listTableRow = new ArrayList<>();
@@ -281,6 +332,9 @@ public class SelectInsertFilmDynamicTable {
         return params;
     }
 
+    /**
+     * Realiza la limpieza de todos campos que había en la tabla
+     */
     public void resetTable()
     {
         selectInsertFilmActivity.runOnUiThread(new Runnable() {
@@ -292,6 +346,9 @@ public class SelectInsertFilmDynamicTable {
         });
     }
 
+    /**
+     * Introduce a la estructura de la tabla, la cabecera a partir de los datos almacenados en el Singleton
+     */
     public void addHeader()
     {
         selectInsertFilmActivity.runOnUiThread(new Runnable() {
@@ -302,6 +359,9 @@ public class SelectInsertFilmDynamicTable {
         });
     }
 
+    /**
+     * Introduce a la estructura de la tabla, los datos de las distintas asignaturas guardadas
+     */
     public void addData()
     {
         selectInsertFilmActivity.runOnUiThread(new Runnable() {

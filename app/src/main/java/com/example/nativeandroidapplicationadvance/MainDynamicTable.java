@@ -40,6 +40,12 @@ public class MainDynamicTable {
     private int indexCell;
     private int indexRow;
 
+    /**
+     * Constructor de la tabla dinámica
+     * @param mainActivity Actividad principal
+     * @param tableLayout Tabla donde se añadirán los datos
+     * @param context Contexto de la aplicación
+     */
     public MainDynamicTable(MainActivity mainActivity, TableLayout tableLayout, Context context) {
         this.mainActivity = mainActivity;
         this.tableLayout = tableLayout;
@@ -143,10 +149,19 @@ public class MainDynamicTable {
     private void createDataTable()
     {
         ArrayList<TableRow> listTableRow = new ArrayList<>();
+        /*
+            Se inicializa el valor del booleano del Singleton para hacer que el hilo principal lo tenga
+            en cuenta una vez que se inicie el nuevo hilo y le toque esperar a termine
+         */
         Singleton.setFinish(false);
+        /*
+            Se crea un nuevo hilo para poder generar la tabla de forma asíncrona y así poder establecer
+            las imágenes de las películas que se obtienen de una URL
+         */
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                // Se crea una nueva fila para la tabla
                 for(indexRow = 0; indexRow < data.size(); indexRow++) {
                     newRow();
                     Film film = data.get(indexRow);
@@ -157,6 +172,11 @@ public class MainDynamicTable {
                     HttpURLConnection connection = null;
                     try {
                         ImageButton imageButton = new ImageButton(context);
+                        /*
+                            Se comprueba si tiene una una URL la imagen o no para mostrar una imagen
+                            por defecto o no. En caso de haber una URL, se establece la conexión y se
+                            establece la imagen a través de la URL
+                         */
                         if(!finalInfo.equals("N/A"))
                         {
                             url = new URL(finalInfo);
@@ -168,12 +188,25 @@ public class MainDynamicTable {
                             Bitmap bmp = BitmapFactory.decodeStream(input);
                             imageButton.setImageBitmap(bmp);
                         }
+                        /*
+                            En caso de no haber una URL, se establece la imagen por defecto
+                         */
                         else
                         {
                             imageButton.setImageResource(R.drawable.film);
                             imageButton.setBackground(ContextCompat.getDrawable(mainActivity, R.drawable.not_rounded_rectangle_white_no_border));
                             imageButton.setScaleType(ImageView.ScaleType.FIT_START);
                         }
+                        //Se establece el acceso a la sección para ver los datos de la película al presionar la imagen de la película
+                        imageButton.setOnClickListener(v -> {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("idFilm", film.getIdFilm());
+                            Intent intent = new Intent(mainActivity, CheckModifyDeleteActivity.class);
+                            intent.putExtras(bundle);
+                            mainActivity.startActivity(intent);
+                            mainActivity.finish();
+                        });
+                        // Se introduce la imagen en la celda correspondiente a la fila que se está creando de la tabla
                         tableRow.addView(imageButton, newTableRowParams());
                     } catch (Exception e) {
                         Log.e(LOG, e.getMessage());
@@ -181,10 +214,15 @@ public class MainDynamicTable {
                         tableRow.addView(imageButton, newTableRowParams());
                     }
                     finally {
+                        // Se cierra la conexión en caso de haberla abierta
                         if (connection != null) {
                             connection.disconnect();
                         }
                     }
+                    /*
+                        Se crea la nueva celda para el botón para acceder a la sección para consultar,
+                        modificar o eliminar la película
+                     */
                     newCell();
                     Button buttonFilm = new Button(context);
                     buttonFilm.setId(film.getIdFilm());
@@ -198,11 +236,10 @@ public class MainDynamicTable {
                     buttonFilm.setBackground(ContextCompat.getDrawable(mainActivity, R.drawable.not_rounded_rectangle_white_no_border));
                     buttonFilm.setAllCaps(false);
                     tableRow.addView(buttonFilm, newTableRowParams());
-                    //Se establece el acceso a los datos de la asignatura a través de su botón
+                    //Se establece el acceso a la sección para ver los datos de la película al presionar el título de la película
                     buttonFilm.setOnClickListener(v -> {
                         Bundle bundle = new Bundle();
                         bundle.putInt("idFilm", film.getIdFilm());
-                        //bundle.putString("title", film.getTitle());
                         Intent intent = new Intent(mainActivity, CheckModifyDeleteActivity.class);
                         intent.putExtras(bundle);
                         mainActivity.startActivity(intent);
@@ -210,70 +247,38 @@ public class MainDynamicTable {
                     });
                     tableRow.setGravity(Gravity.CENTER_VERTICAL);
                     tableRow.setBackground(ContextCompat.getDrawable(mainActivity, R.drawable.rounded_rectangle_white_border_gray));
-
                     listTableRow.add(tableRow);
                 }
+                /*
+                    Se indica que ha terminado el hilo, se guarda en el Singleton la estructura creada
+                    para la tabla puesto que solo lo puede actualizar el hilo principal y se notifica al
+                    hilo principal para que pueda continuar con su ejecución
+                 */
                 Singleton.setFinish(true);
                 Singleton.setListTableRows(listTableRow);
                 notifyFinishBuildStructureTable();
             }
         });
+        // Se inicia el hilo creado para la creación de la estructura de la tabla
         thread.start();
+        // Se genera la estructura de la tabla
         buildTable();
-
-        /*String info;
-
-        for(indexRow = 0; indexRow < data.size(); indexRow++)
-        {
-            newRow();
-            for(indexCell = 0; indexCell < header.length; indexCell++)
-            {
-                newCell();
-                Film film = data.get(indexRow);
-                switch(indexCell)
-                {
-                    //Muestra el campo de la imagen de la película
-                    case 0:
-                        info = String.valueOf(film.getImagePoster());
-                        textCell.setText(info);
-                        tableRow.addView(textCell, newTableRowParams());
-                        break;
-                    //Muestra el botón con el nombre de la asignatura y el acceso a los datos de la misma
-                    case 1:
-                        Button buttonFilm = new Button(context);
-                        buttonFilm.setId(film.getIdFilm());
-                        buttonFilm.setText(film.getTitle());
-                        buttonFilm.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                        buttonFilm.setTextColor(Color.parseColor("#000000"));
-                        buttonFilm.setBackground(ContextCompat.getDrawable(mainActivity, R.drawable.rounded_rectangle_white));
-                        buttonFilm.setTextSize(16);
-                        buttonFilm.setGravity(Gravity.CENTER);
-                        buttonFilm.setWidth((int) (getScreenWidth() * 0.72));
-                        buttonFilm.setAllCaps(false);
-                        tableRow.addView(buttonFilm, newTableRowParams());
-                        //Se establece el acceso a los datos de la asignatura a través de su botón
-                        buttonFilm.setOnClickListener(v -> {
-                            Bundle bundle = new Bundle();
-                            bundle.putInt("idFilm", film.getIdFilm());
-                            Intent intent = new Intent(mainActivity, InsertFilmActivity.class);
-                            intent.putExtras(bundle);
-                            mainActivity.startActivity(intent);
-                            mainActivity.finish();
-                        });
-                        break;
-                }
-            }
-            tableRow.setGravity(Gravity.CENTER_VERTICAL);
-            tableLayout.addView(tableRow);
-        }*/
     }
 
+    /**
+     * Notifica al hilo principal que ha terminado de crear la estructura de la tabla
+     */
     public synchronized void notifyFinishBuildStructureTable() {
         notifyAll();
     }
 
+    /**
+     * Establece la espera del hilo principal hasta que el hilo creado termine de montar la
+     * estructura de la tabla
+     */
     public synchronized void waitFinishThread() {
         try {
+            // Se espera a que termine el hilo creado para la creación de la estructura de la tabla
             while (!Singleton.isFinish()) {
                 wait();
             }
@@ -282,6 +287,9 @@ public class MainDynamicTable {
         }
     }
 
+    /**
+     * Genera la estructura de la tabla dentro de la interfaz de la actividad
+     */
     private synchronized void buildTable()
     {
         ArrayList<TableRow> listTableRow = new ArrayList<>();
@@ -338,6 +346,9 @@ public class MainDynamicTable {
         });
     }
 
+    /**
+     * Introduce a la estructura de la tabla, la cabecera a partir de los datos almacenados en el Singleton
+     */
     public void addHeader()
     {
         mainActivity.runOnUiThread(new Runnable() {

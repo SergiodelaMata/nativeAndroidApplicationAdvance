@@ -32,6 +32,10 @@ public class InsertFilmActivity extends AppCompatActivity {
     private InsertFilmActivity insertFilmActivity;
     private DatePickerDialog datePickerDialog;
 
+    /**
+     * Método que se ejecuta al crear la actividad
+     * @param savedInstanceState Bundle de los datos guardados de la instancia anterior
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,17 +66,26 @@ public class InsertFilmActivity extends AppCompatActivity {
 
         dateSeenFilmEditText.setHint("dd/mm/yyyy");
 
+        /*
+            Establece el comportamiento de comprobación e inserción de los datos de la película una
+            vez presiona el botón de inserción de datos
+         */
         buttonAddFilm.setOnClickListener(view -> {
             String languageSeenFilm = languageSeenFilmEditText.getText().toString();
             String dateSeenFilm = dateSeenFilmEditText.getText().toString();
             String citySeenFilm = citySeenFilmEditText.getText().toString();
             String countrySeenFilm = countrySeenFilmEditText.getText().toString();
+            /*
+                Comprobación de que los campos obligatorios no estén vacíos. En caso de estar vacíos,
+                se muestra un mensaje de error.
+             */
             if (languageSeenFilm.isEmpty() || dateSeenFilm.isEmpty() || citySeenFilm.isEmpty() || countrySeenFilm.isEmpty()) {
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.AlertNoRequiredData)
                         .setMessage(R.string.MessageNoRequiredData)
                         .show();
             }
+            // En caso de que los campos obligatorios no estén vacíos, se procede a la inserción de los datos
             else {
                 Film film = Singleton.getFilm();
                 film.setLanguageSeen(languageSeenFilm);
@@ -80,12 +93,14 @@ public class InsertFilmActivity extends AppCompatActivity {
                 film.setCitySeen(citySeenFilm);
                 film.setCountrySeen(countrySeenFilm);
                 boolean verify = dbManager.newFilm(film, null);
+                // Si la inserción se ha realizado correctamente, se vuelve a la página principal
                 if(verify)
                 {
                     Intent intent = new Intent(InsertFilmActivity.this, MainActivity.class);
                     this.startActivity(intent);
                     finish();
                 }
+                // Si no se ha podido realizar la inserción, se muestra una alerta indicándolo
                 else
                 {
                     new AlertDialog.Builder(this)
@@ -96,12 +111,17 @@ public class InsertFilmActivity extends AppCompatActivity {
             }
        });
 
+        /*
+            Establece el comportamiento del campo para insertar la fecha en la que se vió la película
+            para se pueda introducir una fecha válida a través de un calendario
+         */
         dateSeenFilmEditText.setOnClickListener(view -> {
             final Calendar calendar = Calendar.getInstance();
             int mDay = calendar.get(Calendar.DAY_OF_MONTH);
             int mMonth = calendar.get(Calendar.MONTH);
             int mYear = calendar.get(Calendar.YEAR);
 
+            //Establece el formato en el que se verá la fecha una vez seleccionada la fecha
             datePickerDialog = new DatePickerDialog(insertFilmActivity, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
@@ -112,6 +132,11 @@ public class InsertFilmActivity extends AppCompatActivity {
             datePickerDialog.show();
         });
 
+        /*
+            Obtiene los datos guardados de la actividad anterior y se recoge el título de la película
+            para buscar información de la misma en la API y posteriormente rellenar todos los campos
+            a partir de la información obtenida (salvo los que se deben rellenar)
+         */
         Intent intentSaved = getIntent();
         Bundle bundle = intentSaved.getExtras();
         Film film = new Film();
@@ -123,26 +148,42 @@ public class InsertFilmActivity extends AppCompatActivity {
         String title = film.getTitle();
         String[] titleArray = title.split(" ");
         StringBuilder titleText = new StringBuilder();
-        for (int i = 0; i < titleArray.length; i++) {
-            if (i == 0) {
+        // Se formatea el título de la película para que se pueda buscar en la API
+        for (int i = 0; i < titleArray.length; i++)
+        {
+            // En caso de que solo sea la primera palabra de la película, solo se añade ésta
+            if (i == 0)
+            {
                 titleText.append(titleArray[i]);
-            } else {
+            }
+            /*
+                En caso de que no sea la primera palabra de la película, se añade un '+' delante de
+                la palabra y se añade la palabra
+             */
+            else
+            {
                 titleText.append("+").append(titleArray[i]);
             }
         }
         String content = "";
         HttpURLConnection urlConnection = null;
         String finalTitleText = titleText.toString();
-        Log.i(LOG, titleText.toString());
+        /*
+            Se inicializa el valor del booleano del Singleton para hacer que el hilo principal lo tenga
+            en cuenta una vez que se inicie el nuevo hilo y le toque esperar a termine
+         */
         Singleton.setFinish(false);
-
+         /*
+            Se crea un nuevo hilo para poder obtener de la API toda la información de la película a partir
+            del título de la misma
+         */
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 HttpURLConnection urlConnection = null;
                 String content = "";
                 try {
-                    //Realiza una búsqueda inicial del listado de películas que encajan a partir de un título
+                    //Realiza una búsqueda de la película a partir de un título en la API
                     URL urlSearch = new URL("https://" + url + "/?apikey=" + apiKey + "&t=" + finalTitleText);
                     urlConnection = (HttpURLConnection) urlSearch.openConnection();
                     urlConnection.setRequestMethod("GET");
@@ -151,14 +192,25 @@ public class InsertFilmActivity extends AppCompatActivity {
                     urlConnection.setReadTimeout(10000);
                     urlConnection.setConnectTimeout(15000);
 
+                    /*
+                        Se comprueba si la conexión se ha realizado correctamente.
+                        En caso de no tener una conexión autorizada lo indica en el log.
+                     */
                     int statusCode = urlConnection.getResponseCode();
                     if (statusCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                         Log.d(LOG, "HTTP_UNAUTHORIZED");
                     }
+                    /*
+                        En caso de poder realizar la conexión, se obtiene el contenido de la respuesta
+                     */
                     else if (statusCode == HttpURLConnection.HTTP_OK) {
                         InputStream inputStream = urlConnection.getInputStream();
                         content = new Scanner(inputStream).useDelimiter("\\A").next();
                         JSONObject jsonObject = new JSONObject(content);
+                        /*
+                            Se comprueba si se han obtenido resultados de la búsqueda.
+                            En caso de encontrarse, se obtiene la información de la película.
+                         */
                         if(jsonObject.getString("Response").equals("True"))
                         {
                             Log.i(LOG, "Response: " + jsonObject.getString("Response"));
@@ -175,37 +227,53 @@ public class InsertFilmActivity extends AppCompatActivity {
                             Singleton.setFilm(film);
 
                         }
+                        // En caso de no encontrarse resultados, se indica en el log.
                         else
                         {
                             Log.i(LOG, "No se encontraron películas");
                         }
                     }
-                } catch (Exception e) {
-                    Log.e(LOG, "Error: " + e.getMessage());
-                } finally {
-                    if (urlConnection != null) {
-                        urlConnection.disconnect();
-                        Singleton.setFinish(true);
-                        notifyFinishInsertDataFilm();
-                    }
                 }
-
+                catch (Exception e)
+                {
+                    Log.e(LOG, "Error: " + e.getMessage());
+                }
+                finally
+                {
+                    // Se cierra la conexión en caso de haberla abierta
+                    if (urlConnection != null)
+                    {
+                        urlConnection.disconnect();
+                    }
+                    Singleton.setFinish(true);
+                    notifyFinishInsertDataFilm();
+                }
             }
         });
+        // Se inicia el hilo creado para la obtención de la información de la película
         thread.start();
+        // El hilo principal se queda esperando a que el hilo creado termine
         waitFinishThread();
+        //Se rellenan los campos con los datos de la película
         yearEditText.setText(Singleton.getFilm().getYear());
         durationEditText.setText(Singleton.getFilm().getDuration());
         genreEditText.setText(Singleton.getFilm().getGenres());
         String listActorsText = Singleton.getFilm().getActors();
         String[] listActors = listActorsText.split(",");
         StringBuilder listOtherActors = new StringBuilder();
+        /*
+            A partir del listado completo de actores, se separa el primer actor del resto para que
+            el primero aparezca en uno de los campos como actor principal y el resto en otro campo
+            como actores secundarios u otros miembros del reparto
+         */
         for(int i = 1; i < listActors.length; i++)
         {
+            // Si es el primero, se guarda solo el campo del nombre del actor
             if(i == 1)
             {
                 listOtherActors = new StringBuilder(listActors[i]);
             }
+            // Si no es el primero, se guarda el nombre del actor y una coma para separarlo del resto
             else
             {
                 listOtherActors.append(",").append(listActors[i]);
@@ -217,8 +285,15 @@ public class InsertFilmActivity extends AppCompatActivity {
         directorEditText.setText(Singleton.getFilm().getDirector());
         countryEditText.setText(Singleton.getFilm().getCountryMade());
         originalLanguageEditText.setText(Singleton.getFilm().getOriginalLanguage());
-
+        /*
+            Se inicializa el valor del booleano del Singleton para hacer que el hilo principal lo tenga
+            en cuenta una vez que se inicie el nuevo hilo y le toque esperar a termine
+         */
         Singleton.setFinish(false);
+        /*
+            Se crea un nuevo hilo para poder generar la imagen de la película de forma asíncrona a partir de
+            su URL
+         */
         Thread threadImage = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -226,6 +301,11 @@ public class InsertFilmActivity extends AppCompatActivity {
                 HttpURLConnection connection = null;
                 try
                 {
+                    /*
+                        Se comprueba si el campo relacionado a la imagen de la película cuenta con
+                        una URL o no. En caso de haber una URL, se establece la conexión y se
+                        establece la imagen a través de la URL
+                     */
                     if(!Singleton.getFilm().getImagePoster().equals("N/A"))
                     {
                         url = new URL(Singleton.getFilm().getImagePoster());
@@ -237,6 +317,9 @@ public class InsertFilmActivity extends AppCompatActivity {
                         Bitmap bmp = BitmapFactory.decodeStream(input);
                         posterImageView.setImageBitmap(bmp);
                     }
+                    /*
+                        En caso de no haber una URL, se establece la imagen por defecto
+                     */
                     else
                     {
                         posterImageView.setImageResource(R.drawable.film);
@@ -246,25 +329,33 @@ public class InsertFilmActivity extends AppCompatActivity {
                     Log.e(LOG, e.getMessage());
                 }
                 finally {
+                    // Se cierra la conexión en caso de haberla abierta
                     if (connection != null) {
                         connection.disconnect();
                     }
                     Singleton.setFinish(true);
                     notifyFinishInsertDataFilm();
                 }
-
             }
         });
+        // Se inicia el hilo creado para obtener la imagen de la película
         threadImage.start();
+        // El hilo principal se queda esperando a que el hilo creado termine
         waitFinishThread();
-
-
     }
 
+    /**
+     * Notifica al hilo principal que ya se han obtenido los datos de la película e introducido en
+     * los distintos campos de la actividad
+     */
     private synchronized void notifyFinishInsertDataFilm() {
         notifyAll();
     }
 
+    /**
+     * Establece la espera del hilo principal hasta que el hilo creado termine de obtener los datos
+     * de la película y los introduzca en los distintos campos de la actividad
+     */
     private synchronized void waitFinishThread() {
         try {
             while (!Singleton.isFinish()) {
@@ -274,17 +365,4 @@ public class InsertFilmActivity extends AppCompatActivity {
             Log.e(LOG, e.getMessage());
         }
     }
-
-
-
-    /*
-        Establece la redirección si se presiona el botón para ir hacia atrás a la actividad principal
-     */
-    /*@Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.startActivity(new Intent(InsertFilmActivity.this, SelectInsertFilmActivity.class));
-        this.finish();
-    }*/
-
 }
