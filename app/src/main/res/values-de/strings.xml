@@ -5,7 +5,7 @@
     <string name="introduction">Willkommen bei unserer App</string>
     <string name="AddText">Neuen Film hinzufügen</string>
     <string name="ShowText">Sehen Sie die Filme, die Sie gesehen haben</string>
-    <string name="ShowDetailsFilms">Um weitere Informationen zu einem der aufgelisteten Filme zu erhalten, klicken Sie auf den Titel des Films.</string>
+    <string name="ShowDetailsFilms">Um weitere Informationen zu einem der Filme in der Liste zu erhalten, klicken Sie auf den Titel, das Bild oder das Aufführungsdatum des Films.</string>
     <string name="Poster">Poster Bild</string>
     <string name="TitleFilm">Titelfilm</string>
     <string name="YearFilm">Jahr Produktion</string>

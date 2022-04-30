@@ -5,7 +5,7 @@
     <string name="introduction">Benvenuti nella nostra App</string>
     <string name="AddText">Aggiungi un nuovo film visto</string>
     <string name="ShowText">Vedere i film che hai visto</string>
-    <string name="ShowDetailsFilms">Per vedere più informazioni da qualsiasi elenco di film, premi sul titolo del film.</string>
+    <string name="ShowDetailsFilms">Per vedere più informazioni su qualsiasi film della lista, clicca sul titolo del film, sull\'immagine o sulla data di visione.</string>
     <string name="Poster">Immagine del poster</string>
     <string name="TitleFilm">Titolo del film</string>
     <string name="YearFilm">Anno di produzione</string>
