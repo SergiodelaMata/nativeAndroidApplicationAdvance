@@ -230,7 +230,7 @@ public class SelectInsertFilmDynamicTable {
                     buttonFilm.setText(film.getTitle());
                     buttonFilm.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     buttonFilm.setTextColor(Color.parseColor("#000000"));
-                    buttonFilm.setTextSize(16);
+                    buttonFilm.setTextSize(18);
                     buttonFilm.setGravity(Gravity.START);
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 100);
                     buttonFilm.setLayoutParams(layoutParams);

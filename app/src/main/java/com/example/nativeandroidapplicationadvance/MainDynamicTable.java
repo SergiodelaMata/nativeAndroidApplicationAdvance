@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -224,20 +225,53 @@ public class MainDynamicTable {
                         modificar o eliminar la película
                      */
                     newCell();
+                    LinearLayout linearLayout = new LinearLayout(context);
+                    linearLayout.setOrientation(LinearLayout.VERTICAL);
+                    linearLayout.setGravity(Gravity.CENTER);
+
+                    // Se crea el botón para acceder a la sección para consultar, modificar o eliminar la película desde el título de la película
                     Button buttonFilm = new Button(context);
                     buttonFilm.setId(film.getIdFilm());
                     buttonFilm.setText(film.getTitle());
                     buttonFilm.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     buttonFilm.setTextColor(Color.parseColor("#000000"));
-                    buttonFilm.setTextSize(16);
+                    buttonFilm.setTextSize(18);
                     buttonFilm.setGravity(Gravity.START);
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 100);
                     buttonFilm.setLayoutParams(layoutParams);
                     buttonFilm.setBackground(ContextCompat.getDrawable(mainActivity, R.drawable.not_rounded_rectangle_white_no_border));
                     buttonFilm.setAllCaps(false);
-                    tableRow.addView(buttonFilm, newTableRowParams());
+                    linearLayout.addView(buttonFilm, newLinearLayoutParams());
+
+                    // Se crea el botón para acceder a la sección para consultar, modificar o eliminar la película desde el botón de la fecha de visualización
+                    String text =  "";
+                    Button buttonDateFilm = new Button(context);
+                    buttonDateFilm.setId(film.getIdFilm());
+                    buttonDateFilm.setText(film.getDateSeen());
+                    buttonDateFilm.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    buttonDateFilm.setTextColor(Color.parseColor("#000000"));
+                    buttonDateFilm.setTextSize(16);
+                    buttonDateFilm.setText(R.string.Seen);
+                    text = buttonDateFilm.getText().toString() + " " + film.getDateSeen();
+                    buttonDateFilm.setText(text);
+                    buttonDateFilm.setGravity(Gravity.START);
+                    buttonDateFilm.setLayoutParams(layoutParams);
+                    buttonDateFilm.setBackground(ContextCompat.getDrawable(mainActivity, R.drawable.not_rounded_rectangle_white_no_border));
+                    buttonDateFilm.setAllCaps(false);
+                    linearLayout.addView(buttonDateFilm, newLinearLayoutParams());
+
+                    tableRow.addView(linearLayout, newTableRowParams());
                     //Se establece el acceso a la sección para ver los datos de la película al presionar el título de la película
                     buttonFilm.setOnClickListener(v -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("idFilm", film.getIdFilm());
+                        Intent intent = new Intent(mainActivity, CheckModifyDeleteActivity.class);
+                        intent.putExtras(bundle);
+                        mainActivity.startActivity(intent);
+                        mainActivity.finish();
+                    });
+                    //Se establece el acceso a la sección para modificar los datos de la película al presionar la fecha de visualización de la película
+                    buttonDateFilm.setOnClickListener(v -> {
                         Bundle bundle = new Bundle();
                         bundle.putInt("idFilm", film.getIdFilm());
                         Intent intent = new Intent(mainActivity, CheckModifyDeleteActivity.class);
@@ -316,6 +350,14 @@ public class MainDynamicTable {
     {
         TableRow.LayoutParams params = new TableRow.LayoutParams();
         params.setMargins(0,0,0,0);
+        params.weight = 1;
+        return params;
+    }
+
+    private LinearLayout.LayoutParams newLinearLayoutParams()
+    {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(10,0,10,0);
         params.weight = 1;
         return params;
     }
