@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <!-- Título de la actividad -->
+        <!-- Sección del título de la actividad -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -18,6 +18,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
+            <!-- Título de la actividad -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -26,6 +27,7 @@
                 android:textColor="@color/black"
                 android:gravity="center"/>
         </LinearLayout>
+        <!-- Sección de la imagen de la película -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,15 +36,18 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:gravity="center">
+            <!--- Imagen de la película -->
             <ImageView
                 android:id="@+id/imageFilm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </ImageView>
         </LinearLayout>
+        <!-- Sección del campo para introducir el título de la película -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <!-- Campo de texto del título de la película -->
             <TextView
                 android:id="@+id/titleFilm"
                 android:layout_width="match_parent"
@@ -51,6 +56,7 @@
                 android:textColor="@color/black"
                 android:gravity="center"/>
         </LinearLayout>
+        <!-- Sección de datos a introducir por el usuario -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,10 +66,14 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:orientation="vertical">
+            <!-- Sección para presentar la sección de la actividad
+                centrada en la inserción de los datos a introducir por el usuario -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10sp">
+                <!-- Campo de texto para indicar los campos en los que debe insertar
+                     información el usuario-->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -74,7 +84,8 @@
                     android:textColor="@color/black"
                     android:gravity="start"/>
             </LinearLayout>
-            <!-- Campo de introducción del idioma en el que se vió -->
+            <!-- Sección para el campo del idioma en el que se ha visto la
+                 película -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,6 +94,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
+                    <!-- Label para el campo del idioma en el que se ha visto la
+                         película -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -90,6 +103,8 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:gravity="start"/>
+                <!-- Campo de texto para introducir el idioma en el que
+                     se ha visto la película -->
                 <EditText
                     android:id="@+id/languageSeenFilm"
                     android:layout_width="match_parent"
@@ -102,7 +117,8 @@
                     android:gravity="start"
                     android:inputType="text" />
             </LinearLayout>
-            <!-- Campo de introducción de la fecha en la que se vió -->
+            <!-- Sección para el campo de la fecha en la que se ha visto la
+                 película -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,6 +127,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
+                <!-- Label para el campo de la fecha en la que se ha visto la
+                     película -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -118,6 +136,8 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:gravity="start"/>
+                <!-- Campo de texto para introducir la fecha en la que se ha
+                     visto la película -->
                 <EditText
                     android:id="@+id/dateSeenFilm"
                     android:layout_width="match_parent"
@@ -131,7 +151,8 @@
                     android:focusableInTouchMode="false"
                     android:inputType="date"/>
             </LinearLayout>
-            <!-- Campo de introducción de la ciudad en la que se vió -->
+            <!-- Sección para el campo de la ciudad en la que se ha
+                 visto la película -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -140,6 +161,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
+                <!-- Label para el campo de la ciudad en la que se ha
+                     visto la película -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -147,6 +170,8 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:gravity="start"/>
+                <!-- Campo de texto para introducir la ciudad en la que se ha
+                     visto la película -->
                 <EditText
                     android:id="@+id/citySeenFilm"
                     android:layout_width="match_parent"
@@ -159,7 +184,8 @@
                     android:gravity="start"
                     android:inputType="text" />
             </LinearLayout>
-            <!-- Campo de introducción del país en el que se vió -->
+            <!-- Sección para el campo del país en el que se ha visto la
+                 película -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -168,6 +194,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
+                <!-- Label para el campo del país en el que se ha visto la
+                     película -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -175,6 +203,8 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:gravity="start"/>
+                <!-- Campo de texto para introducir el país en el que se ha
+                     visto la película -->
                 <EditText
                     android:id="@+id/countrySeenFilm"
                     android:layout_width="match_parent"
@@ -188,13 +218,14 @@
                     android:inputType="text" />
             </LinearLayout>
         </LinearLayout>
+        <!-- Sección para el botón de añadir película -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:gravity="center">
-            <!-- Botón de añadir -->
+            <!-- Botón para añadir la película -->
             <Button
                 android:id="@+id/addFilmButton"
                 android:layout_width="match_parent"
@@ -210,6 +241,7 @@
                 android:gravity="center">
             </Button>
         </LinearLayout>
+        <!-- Sección de datos propios de la película-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -219,10 +251,13 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:orientation="vertical">
+            <!-- Sección para mostrar el label de los datos propios de la
+                 película -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10sp">
+                <!-- Label para el campo de la duración de la película -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -231,7 +266,7 @@
                     android:textColor="@color/black"
                     android:gravity="start"/>
             </LinearLayout>
-            <!-- Campo en el que se ve la fecha en la que publicó -->
+            <!-- Sección para el campo de texto del año de la película-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -240,6 +275,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
+                <!-- Label para el campo de texto del año de la película -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -247,6 +283,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:gravity="start"/>
+                <!-- Campo de texto para el año de la película -->
                 <EditText
                     android:id="@+id/yearProductionFilm"
                     android:layout_width="match_parent"
@@ -260,7 +297,7 @@
                     android:inputType="text"
                     android:enabled="false"/>
             </LinearLayout>
-            <!-- Campo en el que se ve la duración de la película -->
+            <!-- Sección para el campo de texto de la duración de la película-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -269,6 +306,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
+                <!-- Label para el campo de texto de la duración de la película -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -276,6 +314,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:gravity="start"/>
+                <!-- Campo de texto para la duración de la película -->
                 <EditText
                     android:id="@+id/durationFilm"
                     android:layout_width="match_parent"
@@ -289,7 +328,7 @@
                     android:inputType="text"
                     android:enabled="false"/>
             </LinearLayout>
-            <!-- Campo en el que se ve los géneros de la película -->
+            <!-- Sección para el campo de texto de los géneros de la película-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -298,6 +337,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
+                <!-- Label para el campo de texto de los géneros de la película -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -305,6 +345,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:gravity="start"/>
+                <!-- Campo de texto para los géneros de la película -->
                 <EditText
                     android:id="@+id/genreFilm"
                     android:layout_width="match_parent"
@@ -318,7 +359,7 @@
                     android:inputType="text"
                     android:enabled="false"/>
             </LinearLayout>
-            <!-- Campo en el que aparece la lista de actores de la película -->
+            <!-- Sección para el campo de texto en el que se introduce el listado de actores de la película -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -327,6 +368,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:visibility="gone">
+                <!-- Campo de texto de los actores de la película -->
                 <EditText
                     android:id="@+id/listActorsFilm"
                     android:layout_width="match_parent"
@@ -340,7 +382,8 @@
                     android:inputType="text"
                     android:enabled="false"/>
             </LinearLayout>
-            <!-- Campo en el que se ve el actor principal de la película -->
+            <!-- Sección para el campo de texto en el que se
+                introduce el actor principal de la película -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -349,6 +392,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
+                <!-- Label para el campo de texto del actor principal de la película -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -356,6 +400,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:gravity="start"/>
+                <!-- Campo de texto del actor principal de la película -->
                 <EditText
                     android:id="@+id/actorFilm"
                     android:layout_width="match_parent"
@@ -369,7 +414,8 @@
                     android:inputType="text"
                     android:enabled="false"/>
             </LinearLayout>
-            <!-- Campo en el que se ve la lista del resto de actores de la película -->
+            <!-- Sección para el campo de texto en el que se introduce el
+                 listado del resto de actores de la película -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -378,6 +424,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
+                <!-- Label para el campo de texto del resto de
+                     los actores de la película -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -385,6 +433,8 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:gravity="start"/>
+                <!-- Campo de texto del resto de los actores de
+                     la película -->
                 <EditText
                     android:id="@+id/actorsFilm"
                     android:layout_width="match_parent"
@@ -401,7 +451,8 @@
                     android:inputType="textMultiLine"
                     android:enabled="false"/>
             </LinearLayout>
-            <!-- Campo que muestra el director de la película -->
+            <!-- Sección para el campo de texto en el que se introduce el
+                 director de la película -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -410,6 +461,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
+                <!-- Label para el campo de texto del director de la
+                     película -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -417,6 +470,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:gravity="start"/>
+                <!-- Campo de texto del director de la película -->
                 <EditText
                     android:id="@+id/directorFilm"
                     android:layout_width="match_parent"
@@ -430,7 +484,8 @@
                     android:inputType="text"
                     android:enabled="false"/>
             </LinearLayout>
-            <!-- Campo para introducir el país de origen de la película -->
+            <!--- Sección para el campo de texto en el que se introduce el
+                  país de origen de la película -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -439,6 +494,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
+                <!-- Label para el campo de texto del país de origen de la
+                     película -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -446,6 +503,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:gravity="start"/>
+                <!-- Campo de texto del país de origen de la película -->
                 <EditText
                     android:id="@+id/countryFilm"
                     android:layout_width="match_parent"
@@ -459,7 +517,8 @@
                     android:inputType="text"
                     android:enabled="false"/>
             </LinearLayout>
-            <!-- Campo para introducir la lengua original de la película -->
+            <!--- Sección para el campo de texto en el que se introduce la
+                  lengua original de la película -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -468,6 +527,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
+                <!-- Label para el campo de texto de la lengua original de la
+                     película -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -475,6 +536,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:gravity="start"/>
+                <!-- Campo de texto de la lengua original de la película -->
                 <EditText
                     android:id="@+id/originalLanguageFilm"
                     android:layout_width="match_parent"

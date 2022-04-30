@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <!-- Título de la actividad -->
+        <!-- Sección del título de la actividad -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -18,6 +18,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
+            <!-- Título de la actividad -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -26,6 +27,8 @@
                 android:textColor="@color/black"
                 android:gravity="center"/>
         </LinearLayout>
+        <!-- Sección para realizar la búsqueda de películas a partir
+             del título de referencia de la película que se busca -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,7 +38,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:orientation="vertical">
-            <!-- Campo de introducción de nombre de película -->
+            <!-- Sección de introducción de nombre de película -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,6 +47,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
+                <!-- Label para la introducción del nombre de película -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -51,6 +55,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:gravity="start"/>
+                <!-- Campo para la introducción del nombre de película -->
                 <EditText
                     android:id="@+id/titleFilm"
                     android:layout_width="match_parent"
@@ -63,7 +68,7 @@
                     android:gravity="start"
                     android:inputType="text" />
             </LinearLayout>
-            <!-- Botón para realizar la búsqueda de la película -->
+            <!-- Sección de botón para realizar la búsqueda de películas -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,6 +77,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="center">
+                <!-- Botón para realizar la búsqueda de la película -->
                 <Button
                     android:id="@+id/insertNewSubjectButton"
                     android:layout_width="match_parent"
@@ -87,6 +93,9 @@
                 </Button>
             </LinearLayout>
         </LinearLayout>
+        <!-- Sección para indicar al usuario que seleccione una
+             película de la lista para completar sus datos de visualización
+             e incluirla al listado de películas vistas -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -94,6 +103,9 @@
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
+            <!-- Texto para indicar al usuario que seleccione una
+                 película de la lista para completar sus datos de visualización
+                 e incluirla al listado de películas vistas -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,7 +114,8 @@
                 android:textColor="@color/black"
                 android:gravity="start"/>
         </LinearLayout>
-
+        <!-- Sección para mostrar el número total de resultados encontrados
+             para el título de película introducido en la búsqueda -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -111,6 +124,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:orientation="horizontal">
+            <!-- Label para mostrar el número total de resultados encontrados
+                 para el título de película introducido en la búsqueda -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,6 +133,8 @@
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:gravity="start"/>
+            <!-- Campo para mostrar el número total de resultados encontrados
+                 para el título de película introducido en la búsqueda -->
             <TextView
                 android:id="@+id/totalResultsTextView"
                 android:layout_width="match_parent"
@@ -126,8 +143,8 @@
                 android:textColor="@color/black"
                 android:gravity="end"/>
         </LinearLayout>
-
-        <!-- Tabla dinámica -->
+        <!-- Sección para mostrar los resultados obtenidos de la búsqueda
+             en una tabla dinámica -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -137,54 +154,70 @@
             android:layout_marginRight="10dp"
             android:orientation="vertical"
             android:gravity="center">
+            <!-- Sección para introducir los botones para ir a la página
+                 anterior o a la página siguiente de resultados  además
+                 de indicar el número de página en la que se encuentra -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center">
+                <!-- Botón para ir a la página anterior de resultados -->
                 <Button
                     android:id="@+id/previousPageButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
                     android:background="@drawable/rounded_rectangle_blue"
                     android:textSize="20sp"
                     android:textAllCaps="false"
                     android:text="@string/previousPage">
                 </Button>
+                <!-- Campo para mostrar el número de página en la que se
+                     encuentra -->
                 <TextView
                     android:id="@+id/numberPage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:textSize="20sp"
                     android:textColor="@color/black">
                 </TextView>
+                <!-- Botón para ir a la página siguiente de resultados -->
                 <Button
                     android:id="@+id/nextPageButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
                     android:background="@drawable/rounded_rectangle_blue"
                     android:textSize="20sp"
                     android:textAllCaps="false"
                     android:text="@string/nextPage">
                 </Button>
             </LinearLayout>
+            <!-- Sección para introducir la tabla dinámica con los resultados
+                 de la búsqueda -->
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp">
+                <!--- Tabla dinámica con los resultados de la búsqueda -->
                 <TableLayout
                     android:id="@+id/tableFilms"
                     android:layout_width="wrap_content"
