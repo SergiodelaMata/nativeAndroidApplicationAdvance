@@ -36,4 +36,5 @@
     <string name="MessageNoRequiredData">Some of the required data have not been establish. Please introduce the data from the language, the date, the city and the country in which it was seen the film.</string>
     <string name="ModifyDataFilm">Modify data</string>
     <string name="DeleteDataFilm">Delete data</string>
+    <string name="Seen">"Seen date: "</string>
 </resources>

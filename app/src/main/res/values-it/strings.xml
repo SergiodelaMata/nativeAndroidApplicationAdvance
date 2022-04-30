@@ -36,4 +36,5 @@
     <string name="MessageNoRequiredData">Alcuni dei dati richiesti non sono stati stabiliti. Si prega di introdurre i dati della lingua, la data, la città e il paese in cui è stato visto il film.</string>
     <string name="ModifyDataFilm">Modificare i dati</string>
     <string name="DeleteDataFilm">Cancellare i dati</string>
+    <string name="Seen">Data vista:</string>
 </resources>

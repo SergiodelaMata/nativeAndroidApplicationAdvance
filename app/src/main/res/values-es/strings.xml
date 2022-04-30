@@ -36,4 +36,5 @@
     <string name="MessageNoRequiredData">Algunos de los datos requeridos no se han establecido. Por favor, introduzca los datos del idioma, la fecha, la ciudad y el país en el que se vio la película.</string>
     <string name="ModifyDataFilm">Modificar datos</string>
     <string name="DeleteDataFilm">Eliminar datos</string>
+    <string name="Seen">Día de visualización:</string>
 </resources>
