@@ -64,7 +64,6 @@ public class DBManager extends SQLiteOpenHelper
             Log.i(LOG, "Creando la base de datos de las películas");
             //Se crea la tabla de las películas
             db.execSQL(createTableFilmQuery);
-            //insertInitData(db);
         }
         catch(final SQLException e)
         {
